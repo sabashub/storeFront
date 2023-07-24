@@ -31,12 +31,20 @@ export const ButtonStyle = css`
     `}
 
   ${props =>
-    props.primary &&
+    props.primary && !props.outline &&
     css`
       background-color: #5542F6;
       border: 1px solid #5542F6;
       color: #fff;
     `}
+
+    ${props =>
+      props.primary && props.outline &&
+      css`
+        background-color: transparent;
+        border: 1px solid #5542F6;
+        color: #5542F6;
+      `}
 
   ${props =>
     props.size === "l" &&
