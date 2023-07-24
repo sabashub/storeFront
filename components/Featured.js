@@ -48,9 +48,10 @@ export default function Featured({product}) {
                 <ColumnsWrapper>
                     <Column>
                         <div>
-                            <Title>{product.tiyle}</Title>
+                            <Title>{product?.title}</Title>
                             <Desc>
-                                {product.description}                        </Desc>
+                                {product?.description}                        
+                            </Desc>
                             <ButtonsWrapper>
                                 <ButtonLink href={'/products/'+product._id} outline={1} white={1}>erad More</ButtonLink>
                                 <Button primary>
