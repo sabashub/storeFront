@@ -27,15 +27,30 @@ const SearchInput = styled.input`
 `;
 
 export default function SearchBar({products}) {
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
     for (const product of products) {
-        console.log(product.title);
+        if(!product.title.includes(value)){
+          const elements = document.querySelectorAll(`[value="${product._id}"]`);
+          elements.forEach((element) => {
+            element.style.display = "none";
+          });
+        }
+        else{
+          const elements = document.querySelectorAll(`[value="${product._id}"]`);
+          elements.forEach((element) => {
+            element.style.display = "block";
+          });
+        }
+        
     }
   };
+
+  
 
   return (
     <SearchBarWrapper>
