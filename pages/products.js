@@ -18,7 +18,7 @@ export default function ProductsPage({ products }) {
       <Header />
       <Center>
         <SearchBarWrapper>
-          <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} />
+          <SearchBar products={products} />
         </SearchBarWrapper>
         <ProductsGrid products={products} />
       </Center>

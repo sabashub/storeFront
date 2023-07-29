@@ -26,8 +26,16 @@ const SearchInput = styled.input`
   }
 `;
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({products}) {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    for (const product of products) {
+        console.log(product.title);
+    }
+  };
 
   return (
     <SearchBarWrapper>
@@ -35,10 +43,7 @@ export default function SearchBar({ onSearch }) {
         type="text"
         placeholder="Search products..."
         value={searchTerm}
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-          onSearch(e.target.value);
-        }}
+        onChange={handleChange}
       />
     </SearchBarWrapper>
   );
