@@ -28,13 +28,47 @@ const SearchInput = styled.input`
 
 export default function SearchBar({products}) {
 
+  function levenshteinDistance(str1, str2) {
+    const dp = Array.from({ length: str1.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= str2.length; j++) {
+      dp[0][j] = j;
+    }
+  
+    for (let i = 1; i <= str1.length; i++) {
+      for (let j = 1; j <= str2.length; j++) {
+        const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + cost 
+        );
+      }
+    }
+  
+    return dp[str1.length][str2.length];
+  }
+
+  function isAssociated(productName, searchWord) {
+
+    if (productName.toLowerCase().includes(searchWord.toLowerCase())) {
+      return true;
+    }
+    
+    const maxAllowedDistance = 2;
+
+    const distance = levenshteinDistance(productName.toLowerCase(), searchWord.toLowerCase());
+  
+    return distance <= maxAllowedDistance;
+  }
+    
+  
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
     for (const product of products) {
-        if(!product.title.includes(value)){
+        if(!isAssociated(product.title,value)){
           const elements = document.querySelectorAll(`[value="${product._id}"]`);
           elements.forEach((element) => {
             element.style.display = "none";
