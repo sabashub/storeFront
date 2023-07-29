@@ -20,8 +20,32 @@ const Box = styled.div`
     padding:40px;
 `;
 
+const ProductInfoCell = styled.div`
+    padding:10px 0;
+`;
+
+const ProductImageBox = styled.div`
+    width:100px;
+    maxheight:100px;
+    padding:10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+
+    img{
+        max-width:80px;
+        max-height:80px;
+    }
+`;
+
+const QuantityLabel = styled.span`
+    padding: 0 3px;
+`;
+
 export default function CartPage(){
-    const {cartProducts} = useContext(CartContext);
+    const {cartProducts,addProduct,removeProduct} = useContext(CartContext);
     const [products,setProducts] = useState([]);
     useEffect(() => {
         if(cartProducts.length > 0){
@@ -31,6 +55,15 @@ export default function CartPage(){
             })
         }
     }, [cartProducts])
+
+    function moreOfThisProduct(id){
+        addProduct(id);
+    }
+
+    function lessOfThisProduct(id){
+        removeProduct(id);
+    }
+
     return (
         <>
             <Header/>     
@@ -51,16 +84,25 @@ export default function CartPage(){
                                 <tbody>
                                         {products.map(product => (
                                             <tr>
-                                                <td>
-                                                    <img src={product.images[0]} alt=""/>
+                                                <ProductInfoCell>
+                                                    <ProductImageBox>
+                                                        <img src={product.images[0]} alt=""/>
+                                                    </ProductImageBox>
                                                     {product.title}
+                                                </ProductInfoCell>
+                                                <td>
+                                                    <Button onClick={() => lessOfThisProduct(product._id)}>-</Button>
+                                                        <QuantityLabel>
+                                                            {cartProducts.filter
+                                                            (id => id ===product._id).length}
+                                                        </QuantityLabel>
+                                                    <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
                                                 </td>
                                                 <td>
-                                                    {cartProducts.filter
-                                                    (id => id ===product._id).length}
-                                                </td>
-                                                <td>
-                                                    Price
+                                                    
+                                                {cartProducts.filter
+                                                    (id => id ===product._id).length
+                                                * product.price    }
                                                 </td>
                                                 
                                             </tr>
