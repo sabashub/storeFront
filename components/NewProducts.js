@@ -22,7 +22,7 @@ export default function NewProducts({products}){
             <ProductGrid>
                 {products?.length > 0 &&
                 products.map(product =>(
-                    <ProductBox {...product}></ProductBox>
+                    <ProductBox key={product.id} {...product}></ProductBox>
                 ))
                 }
             </ProductGrid>
