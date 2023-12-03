@@ -55,7 +55,7 @@ export default function ProductBox({ _id, title, description, price, images }) {
   const {addProduct} = useContext(CartContext);
   const url = "/products/" + _id;
   return (
-    <ProductWrapper value={_id}>
+    <ProductWrapper value={_id} key={_id}>
       <WhiteBox href={url}>
         <div>
           <img src={images[0]} alt="" />
