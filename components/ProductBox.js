@@ -55,6 +55,7 @@ export default function ProductBox({ _id, title, description, price, images }) {
   const {addProduct} = useContext(CartContext);
   const url = "/products/" + _id;
   return (
+    /* eslint-disable react/jsx-key */
     <ProductWrapper value={_id} key={_id}>
       <WhiteBox href={url}>
         <div>
